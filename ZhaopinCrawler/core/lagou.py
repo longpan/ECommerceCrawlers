@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+from model import Lagou
+
 __author__ = 'Joynice'
 import os
 
@@ -50,6 +52,18 @@ class LaGou(object):
                 if detail.isspace():
                     detail = ''.join(html.xpath('//*[@class="job-detail"]/text()')).strip()
                 print(detail)
+
+                lagouJob = Lagou()
+                lagouJob.position_name = data.get('positionName')
+                lagouJob.area = data.get('district')
+                lagouJob.salery = data.get('salary')
+                lagouJob.working_exp = data.get('workYear')
+                lagouJob.edu_level = data.get('education')
+                lagouJob.position_advantage = data.get('positionAdvantage')
+                lagouJob.url = url
+                lagouJob.detail = detail
+                lagouJob.save()
+
                 data = {
                     "职位名称": data.get('positionName'),
                     "工作地点": data.get('district'),
@@ -61,20 +75,22 @@ class LaGou(object):
                     "详细链接": url,
                     "职位信息": detail
                 }
-                self.data.put(data)
+
+
+                # self.data.put(data)
 
     def run(self):
         self.Spider()
         if os.path.exists(self.path):
             data_list = []
-            self.path = os.path.join(self.path,'save-data')
-            while not self.data.empty():
-                data_list.append(self.data.get())
-            with open(os.path.join(self.path, '拉钩网招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-                      newline='', encoding='utf-8-sig') as f:
-                f_csv = csv.DictWriter(f, self.csv_header)
-                f_csv.writeheader()
-                f_csv.writerows(data_list)
+            # self.path = os.path.join(self.path,'save-data')
+            # while not self.data.empty():
+            #     data_list.append(self.data.get())
+            # with open(os.path.join(self.path, '拉钩网招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+            #           newline='', encoding='utf-8-sig') as f:
+            #     f_csv = csv.DictWriter(f, self.csv_header)
+            #     f_csv.writeheader()
+            #     f_csv.writerows(data_list)
 
 
 if __name__ == '__main__':

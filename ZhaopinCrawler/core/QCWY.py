@@ -1,3 +1,5 @@
+from model import Qcwy
+
 __author__ = 'Joynice'
 from utils.utils import get_header, get_time
 import requests
@@ -73,6 +75,19 @@ class QCWY(object):
                     gongsi = ''.join(html1.xpath('//*[@class="tmsg inbox"]/text()'))
                     if gongsi.isspace():
                         gongsi = ''.join(html1.xpath('//*[@class="tmsg inbox"]//*/text()'))
+
+                    jobDetail = Qcwy()
+                    jobDetail.title = title[0]
+                    jobDetail.url = url[0]
+                    jobDetail.company_name = name[0]
+                    jobDetail.area = area[0]
+                    jobDetail.salery = salery[0] if len(salery)!=0 else None
+                    jobDetail.time = time[0]
+                    jobDetail.detail = detail
+                    jobDetail.company_info = gongsi
+                    jobDetail.save()
+
+
                     data = {
                         "职位名称": title[0],
                         "详细链接": url[0],
@@ -83,7 +98,7 @@ class QCWY(object):
                         "职位信息": detail,
                         "公司信息": gongsi
                     }
-                    self.jobqueue.put(data)
+                    # self.jobqueue.put(data)
                 except:
                     continue
 
@@ -98,16 +113,16 @@ class QCWY(object):
             t.start()
         for t in thread_list:
             t.join()
-        if os.path.exists(self.path):
-            data_list = []
-            self.path = os.path.join(self.path,'save-data')
-            while not self.jobqueue.empty():
-                data_list.append(self.jobqueue.get())
-            with open(os.path.join(self.path, '前途无忧招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-                      newline='', encoding='utf-8-sig') as f:
-                f_csv = csv.DictWriter(f, self.csv_header)
-                f_csv.writeheader()
-                f_csv.writerows(data_list)
+        # if os.path.exists(self.path):
+        #     data_list = []
+        #     self.path = os.path.join(self.path,'save-data')
+        #     while not self.jobqueue.empty():
+        #         data_list.append(self.jobqueue.get())
+        #     with open(os.path.join(self.path, '前途无忧招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+        #               newline='', encoding='utf-8-sig') as f:
+        #         f_csv = csv.DictWriter(f, self.csv_header)
+        #         f_csv.writeheader()
+        #         f_csv.writerows(data_list)
 
 
 if __name__ == '__main__':
