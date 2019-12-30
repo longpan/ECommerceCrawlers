@@ -11,10 +11,12 @@ class BaseModel(Model):
 
 class Lagou(BaseModel):
     area = CharField(null=True)
+    city = CharField(null=True)
     company_name = CharField(null=True)
     detail = TextField(null=True)
     edu_level = CharField(column_name='eduLevel', null=True)
     id = BigAutoField()
+    key_word = CharField(null=True)
     position_advantage = CharField(column_name='positionAdvantage', null=True)
     position_name = CharField(column_name='positionName', null=True)
     salery = CharField(null=True)
@@ -28,10 +30,12 @@ class Lagou(BaseModel):
 
 class Qcwy(BaseModel):
     area = CharField(null=True)
+    city = CharField(null=True)
     company_info = CharField(null=True)
     company_name = CharField(null=True)
     detail = TextField(null=True)
     id = BigAutoField()
+    key_word = CharField(null=True)
     salery = CharField(null=True)
     salery_max = CharField(column_name='saleryMax', null=True)
     salery_min = CharField(column_name='saleryMin', null=True)
@@ -52,6 +56,7 @@ class User(BaseModel):
         table_name = 'user'
 
 class Zhilian(BaseModel):
+    city = CharField(null=True)
     company_area = CharField(null=True)
     company_id = CharField(null=True)
     company_name = CharField(null=True)
@@ -61,6 +66,7 @@ class Zhilian(BaseModel):
     empl_type = CharField(column_name='emplType', null=True)
     id = BigAutoField()
     job_name = CharField(column_name='jobName', null=True)
+    key_word = CharField(null=True)
     number = CharField(null=True)
     position_url = CharField(column_name='positionURL', null=True)
     salery = CharField(null=True)

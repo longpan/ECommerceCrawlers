@@ -85,6 +85,21 @@ class QCWY(object):
                     jobDetail.time = time[0]
                     jobDetail.detail = detail
                     jobDetail.company_info = gongsi
+
+                    jobDetail.city = self.city
+                    jobDetail.key_word = self.keyword
+
+                    if len(salery) > 0:
+                        salary = salery[0]
+                        saleryArray = salary.split("-", 1)
+                        if (len(saleryArray) >= 2):
+                            saleryMin = saleryArray[0]
+                            saleryMax = saleryArray[1]
+                            data['薪资下限'] = saleryMin
+                            data['薪资上限'] = saleryMax
+                            jobDetail.salery_max = saleryMax
+                            jobDetail.salery_min = saleryMin
+
                     jobDetail.save()
 
 
@@ -126,4 +141,4 @@ class QCWY(object):
 
 
 if __name__ == '__main__':
-    a = QCWY(keyword='java', city='北京').run()
+    a = QCWY(keyword='java', city='南宁').run()

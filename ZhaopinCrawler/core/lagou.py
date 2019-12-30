@@ -62,6 +62,17 @@ class LaGou(object):
                 lagouJob.position_advantage = data.get('positionAdvantage')
                 lagouJob.url = url
                 lagouJob.detail = detail
+                lagouJob.city = self.city
+                lagouJob.key_word = self.keyword
+                salary = data.get('salary')
+                saleryArray = salary.split("-", 1)
+                if (len(saleryArray) >= 2):
+                    saleryMin = saleryArray[0]
+                    saleryMax = saleryArray[1]
+                    data['薪资下限'] = saleryMin
+                    data['薪资上限'] = saleryMax
+                    lagouJob.salery_max = saleryMax
+                    lagouJob.salery_min = saleryMin
                 lagouJob.save()
 
                 data = {

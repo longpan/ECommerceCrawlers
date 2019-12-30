@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+from model import Zhilian
+
 __author__ = 'Joynice'
 
 import requests
@@ -83,6 +85,37 @@ class ZhiLian(object):
                     print(detail)
                     jobd['职位描述'] = detail.strip()
                     jobl.append(jobd)
+
+                    jobDetail = Zhilian()
+                    jobDetail.number = job.get('number')
+                    jobDetail.job_name = job.get('jobName')
+                    jobDetail.position_url = job.get('positionURL')
+                    jobDetail.company_name = job.get('company')
+                    jobDetail.company_id = company.get('number')
+                    jobDetail.company_type = company.get('type').get('name')
+                    jobDetail.company_scale = company.get('size').get('name')
+                    jobDetail.url = company.get('url')
+                    jobDetail.company_area = job.get('city').get('display')
+                    jobDetail.salery = job.get('salary')
+                    jobDetail.edu_level = job.get('eduLevel').get('name')
+                    jobDetail.working_exp = jobd['工作经历']
+                    jobDetail.empl_type  = job.get('emplType')
+                    jobDetail.welfare = '、'.join(job.get('welfare')) or '无'
+                    jobDetail.city = self.city
+                    jobDetail.key_word = self.keyword
+                    salary = data.get('salary')
+                    saleryArray = salary.split("-", 1)
+                    if (len(saleryArray) >= 2):
+                        saleryMin = saleryArray[0]
+                        saleryMax = saleryArray[1]
+                        data['薪资下限'] = saleryMin
+                        data['薪资上限'] = saleryMax
+                        jobDetail.salery_max = saleryMax
+                        jobDetail.salery_min = saleryMin
+
+                    jobDetail.save()
+
+
             else:
                 break
         return jobl
@@ -101,4 +134,4 @@ class ZhiLian(object):
 
 if __name__ == '__main__':
 
-    a = ZhiLian(keyword='python', city='南京').run()
+    a = ZhiLian(keyword='python', city='南宁').run()
