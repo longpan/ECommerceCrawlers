@@ -1,4 +1,6 @@
 # -*- coding: UTF-8 -*-
+from model import BossModel
+
 __author__ = 'Joynice'
 
 import csv
@@ -67,7 +69,27 @@ class Boss(object):
                     job['薪资'] = s
                     job['工作经验'] = w
                     job['学历要求'] = e
-                    data.append(job)
+
+                    jobDetail = BossModel()
+                    jobDetail.name = t
+                    jobDetail.url = h
+                    jobDetail.company_name = c
+                    jobDetail.area = a
+                    jobDetail.salary = s
+                    jobDetail.work_exp = w
+                    jobDetail.edu_leve = e
+                    jobDetail.city = self.city
+                    jobDetail.key_word = self.keyword
+                    saleryArray = s.split("-", 1)
+                    if (len(saleryArray) >= 2):
+                        saleryMin = saleryArray[0]
+                        saleryMax = saleryArray[1]
+                        jobDetail.salary_max = saleryMax
+                        jobDetail.salary_min = saleryMin
+                    jobDetail.save()
+
+
+                    # data.append(job)
                 page += 1
             else:
                 break
@@ -78,12 +100,12 @@ class Boss(object):
         if os.path.exists(self.path):
             self.path = os.path.join(self.path, 'save-data')
             data = self.Spider()
-            print(data)
-            with open(os.path.join(self.path, 'Boss直聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-                      newline='', encoding='gb18030') as f:
-                f_csv = csv.DictWriter(f, self.csv_header)
-                f_csv.writeheader()
-                f_csv.writerows(data)
+            # print(data)
+            # with open(os.path.join(self.path, 'Boss直聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+            #           newline='', encoding='gb18030') as f:
+            #     f_csv = csv.DictWriter(f, self.csv_header)
+            #     f_csv.writeheader()
+            #     f_csv.writerows(data)
 
 if __name__ == '__main__':
-    a = Boss(keyword='java', city='南京').run()
+    a = Boss(keyword='java', city='南宁').run()

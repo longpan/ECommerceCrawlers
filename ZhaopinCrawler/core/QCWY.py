@@ -141,4 +141,4 @@ class QCWY(object):
 
 
 if __name__ == '__main__':
-    a = QCWY(keyword='java', city='南宁').run()
+    a = QCWY(keyword='幼师', city='南宁').run()

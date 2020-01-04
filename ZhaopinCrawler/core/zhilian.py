@@ -44,7 +44,7 @@ class ZhiLian(object):
                 "cityId": self.city,
                 "salary": '0, 0'
             }
-            req = requests.get(url=self.base_url, params=params, headers=get_header())
+            req = requests.get(url=self.base_url, params=params)
             cookie = req.cookies
             print(cookie)
             data = req.json()['data']['results']
@@ -134,4 +134,4 @@ class ZhiLian(object):
 
 if __name__ == '__main__':
 
-    a = ZhiLian(keyword='python', city='南宁').run()
+    a = ZhiLian(keyword='java', city='南宁').run()

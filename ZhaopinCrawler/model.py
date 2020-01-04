@@ -9,6 +9,22 @@ class BaseModel(Model):
     class Meta:
         database = database
 
+class BossModel(BaseModel):
+    area = CharField(null=True)
+    company_name = CharField(null=True)
+    edu_leve = CharField(null=True)
+    name = CharField(null=True)
+    salary = CharField(null=True)
+    url = CharField(null=True)
+    work_exp = CharField(null=True)
+    city = CharField(null=True)
+    key_word = CharField(null=True)
+    salary_max = CharField(column_name='salaryMax', null=True)
+    salary_min = CharField(column_name='salaryMin', null=True)
+
+    class Meta:
+        table_name = 'boss'
+
 class Lagou(BaseModel):
     area = CharField(null=True)
     city = CharField(null=True)
