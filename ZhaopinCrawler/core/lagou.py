@@ -73,7 +73,7 @@ class LaGou(object):
                     data['薪资上限'] = saleryMax
                     lagouJob.salery_max = saleryMax
                     lagouJob.salery_min = saleryMin
-                lagouJob.save()
+                # lagouJob.save()
 
                 data = {
                     "职位名称": data.get('positionName'),
@@ -88,21 +88,21 @@ class LaGou(object):
                 }
 
 
-                # self.data.put(data)
+                self.data.put(data)
 
     def run(self):
         self.Spider()
         if os.path.exists(self.path):
             data_list = []
-            # self.path = os.path.join(self.path,'save-data')
-            # while not self.data.empty():
-            #     data_list.append(self.data.get())
-            # with open(os.path.join(self.path, '拉钩网招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-            #           newline='', encoding='utf-8-sig') as f:
-            #     f_csv = csv.DictWriter(f, self.csv_header)
-            #     f_csv.writeheader()
-            #     f_csv.writerows(data_list)
+            self.path = os.path.join(self.path,'save-data')
+            while not self.data.empty():
+                data_list.append(self.data.get())
+            with open(os.path.join(self.path, '拉钩网招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+                      newline='', encoding='utf-8-sig') as f:
+                f_csv = csv.DictWriter(f, self.csv_header)
+                f_csv.writeheader()
+                f_csv.writerows(data_list)
 
 
 if __name__ == '__main__':
-    LaGou(keyword='java', city='北京').run()
+    LaGou(keyword='幼教', city='南宁').run()

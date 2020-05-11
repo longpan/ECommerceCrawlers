@@ -86,10 +86,10 @@ class Boss(object):
                         saleryMax = saleryArray[1]
                         jobDetail.salary_max = saleryMax
                         jobDetail.salary_min = saleryMin
-                    jobDetail.save()
+                    # jobDetail.save()
 
 
-                    # data.append(job)
+                    data.append(job)
                 page += 1
             else:
                 break
@@ -100,12 +100,12 @@ class Boss(object):
         if os.path.exists(self.path):
             self.path = os.path.join(self.path, 'save-data')
             data = self.Spider()
-            # print(data)
-            # with open(os.path.join(self.path, 'Boss直聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-            #           newline='', encoding='gb18030') as f:
-            #     f_csv = csv.DictWriter(f, self.csv_header)
-            #     f_csv.writeheader()
-            #     f_csv.writerows(data)
+            print(data)
+            with open(os.path.join(self.path, 'Boss直聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+                      newline='', encoding='gb18030') as f:
+                f_csv = csv.DictWriter(f, self.csv_header)
+                f_csv.writeheader()
+                f_csv.writerows(data)
 
 if __name__ == '__main__':
     a = Boss(keyword='java', city='南宁').run()

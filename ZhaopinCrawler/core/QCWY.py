@@ -95,12 +95,11 @@ class QCWY(object):
                         if (len(saleryArray) >= 2):
                             saleryMin = saleryArray[0]
                             saleryMax = saleryArray[1]
-                            data['薪资下限'] = saleryMin
-                            data['薪资上限'] = saleryMax
+
                             jobDetail.salery_max = saleryMax
                             jobDetail.salery_min = saleryMin
 
-                    jobDetail.save()
+                    # jobDetail.save()
 
 
                     data = {
@@ -113,7 +112,7 @@ class QCWY(object):
                         "职位信息": detail,
                         "公司信息": gongsi
                     }
-                    # self.jobqueue.put(data)
+                    self.jobqueue.put(data)
                 except:
                     continue
 
@@ -128,17 +127,17 @@ class QCWY(object):
             t.start()
         for t in thread_list:
             t.join()
-        # if os.path.exists(self.path):
-        #     data_list = []
-        #     self.path = os.path.join(self.path,'save-data')
-        #     while not self.jobqueue.empty():
-        #         data_list.append(self.jobqueue.get())
-        #     with open(os.path.join(self.path, '前途无忧招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
-        #               newline='', encoding='utf-8-sig') as f:
-        #         f_csv = csv.DictWriter(f, self.csv_header)
-        #         f_csv.writeheader()
-        #         f_csv.writerows(data_list)
+        if os.path.exists(self.path):
+            data_list = []
+            self.path = os.path.join(self.path,'save-data')
+            while not self.jobqueue.empty():
+                data_list.append(self.jobqueue.get())
+            with open(os.path.join(self.path, '前途无忧招聘_关键词_{}_城市_{}.csv'.format(self.keyword, self.city)), 'w',
+                      newline='', encoding='utf-8-sig') as f:
+                f_csv = csv.DictWriter(f, self.csv_header)
+                f_csv.writeheader()
+                f_csv.writerows(data_list)
 
 
 if __name__ == '__main__':
-    a = QCWY(keyword='幼师', city='南宁').run()
+    a = QCWY(keyword='早教', city='南宁').run()

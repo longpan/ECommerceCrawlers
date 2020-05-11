@@ -113,7 +113,7 @@ class ZhiLian(object):
                         jobDetail.salery_max = saleryMax
                         jobDetail.salery_min = saleryMin
 
-                    jobDetail.save()
+                    # jobDetail.save()
 
 
             else:
@@ -134,4 +134,4 @@ class ZhiLian(object):
 
 if __name__ == '__main__':
 
-    a = ZhiLian(keyword='java', city='南宁').run()
+    a = ZhiLian(keyword='幼教', city='南宁').run()
